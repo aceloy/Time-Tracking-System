@@ -51,6 +51,9 @@ public class UserActivity extends AppCompatActivity {
 
     private void setValues() {
         boolean isUserExist = mUser != null;
+
+        getSupportActionBar().setTitle(getString(isUserExist ? R.string.action_update : R.string.action_add));
+
         mEditTextIDNumber.setEnabled(!isUserExist);
         mEditTextPassword.setEnabled(!isUserExist);
         mEditTextPassword.setTransformationMethod(isUserExist ? HideReturnsTransformationMethod.getInstance() : PasswordTransformationMethod.getInstance());
