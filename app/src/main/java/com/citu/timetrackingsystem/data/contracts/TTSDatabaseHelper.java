@@ -23,6 +23,7 @@ public class TTSDatabaseHelper extends SQLiteOpenHelper {
             + UserContract.UserEntry.COLUMN_AGE + " TEXT, "
             + UserContract.UserEntry.COLUMN_GENDER + " VARCHAR(50), "
             + UserContract.UserEntry.COLUMN_ADDRESS + " VARCHAR(50), "
+            + UserContract.UserEntry.COLUMN_ROLE + " VARCHAR(50), "
             + BaseContract.BaseEntry.COLUMN_STATUS + " VARCHAR(50), "
             + BaseContract.BaseEntry.COLUMN_CREATED_DATE + " VARCHAR(50), "
             + BaseContract.BaseEntry.COLUMN_UPDATED_DATE + " VARCHAR(50));";

@@ -23,5 +23,6 @@ public class UserContract {
         public static final String COLUMN_AGE = "age";
         public static final String COLUMN_GENDER = "gender";
         public static final String COLUMN_ADDRESS = "address";
+        public static final String COLUMN_ROLE = "role";
     }
 }

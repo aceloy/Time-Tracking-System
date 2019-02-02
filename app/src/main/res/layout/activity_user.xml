@@ -6,4 +6,67 @@
     android:layout_height="match_parent"
     tools:context=".view.activities.UserActivity">
 
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/activity_user_editText_id_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_id_number"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/activity_user_editText_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_password"
+            android:inputType="textPassword" />
+
+        <View
+            android:background="@android:color/darker_gray"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/activity_user_editText_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_name" />
+
+        <EditText
+            android:id="@+id/activity_user_editText_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_age"
+            android:inputType="number" />
+
+        <!--TODO: Change to dropdown later -->
+
+        <EditText
+            android:id="@+id/activity_user_editText_gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_gender" />
+
+        <EditText
+            android:id="@+id/activity_user_editText_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_address" />
+
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

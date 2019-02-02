@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -36,6 +37,7 @@ public class UsersFragment extends Fragment implements LoaderManager.LoaderCallb
     public FrameLayout mFrameLayout;
     public RecyclerView mRecyclerView;
     public TextView mTextViewNoUsers;
+    public FloatingActionButton mFabButtonAdd;
 
     private UserAdapter mUserAdapter;
 
@@ -55,7 +57,9 @@ public class UsersFragment extends Fragment implements LoaderManager.LoaderCallb
         mFrameLayout = view.findViewById(R.id.fragment_users_frameLayout);
         mRecyclerView = view.findViewById(R.id.fragment_users_recyclerView);
         mTextViewNoUsers = view.findViewById(R.id.fragment_users_textView_no_users);
+        mFabButtonAdd = view.findViewById(R.id.fragment_users_fab_add);
         prepareRecyclerView();
+        prepareActions();
         return view;
     }
 
@@ -80,6 +84,10 @@ public class UsersFragment extends Fragment implements LoaderManager.LoaderCallb
     public void showHideRecyclerView(boolean isShow) {
         mRecyclerView.setVisibility(isShow ? View.VISIBLE : View.GONE);
         mTextViewNoUsers.setVisibility(isShow ? View.GONE : View.VISIBLE);
+    }
+
+    private void prepareActions() {
+        mFabButtonAdd.setOnClickListener(view -> ActivityNavigator.goToUserActivity(getActivity(), null));
     }
 
     private void getUsers() {

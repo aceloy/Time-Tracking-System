@@ -16,6 +16,7 @@ public class ActivityNavigator {
 
     public static void goToUserActivity(Context context, User user) {
         Intent intent = new Intent(context, UserActivity.class);
+        intent.putExtra("USER", user);
         context.startActivity(intent);
     }
 }

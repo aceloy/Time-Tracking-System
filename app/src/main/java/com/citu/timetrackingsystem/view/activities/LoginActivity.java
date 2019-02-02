@@ -3,7 +3,6 @@ package com.citu.timetrackingsystem.view.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -44,22 +43,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void prepareActions() {
-        mButtonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String idNumber = mEditTextIDNumber.getText().toString().trim();
-                String password = mEditTextPassword.getText().toString().trim();
-                if (TextUtils.isEmpty(idNumber) || TextUtils.isEmpty(password)) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(LoginActivity.this, LoginActivity.this.getString(R.string.message_invalid_id_number_or_password), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    return;
-                }
-                login(Integer.parseInt(idNumber), password);
+        mButtonLogin.setOnClickListener(view -> {
+            String idNumber = mEditTextIDNumber.getText().toString().trim();
+            String password = mEditTextPassword.getText().toString().trim();
+            if (TextUtils.isEmpty(idNumber) || TextUtils.isEmpty(password)) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(LoginActivity.this, LoginActivity.this.getString(R.string.message_invalid_id_number_or_password), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return;
             }
+            loginUser(Integer.parseInt(idNumber), password);
         });
     }
 
@@ -84,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         }.start();
     }
 
-    private void login(int idNumber, String password) {
+    private void loginUser(int idNumber, String password) {
         User user = User.getUserByIDNumberAndPassword(this, idNumber, password);
 
         if (user == null) {
