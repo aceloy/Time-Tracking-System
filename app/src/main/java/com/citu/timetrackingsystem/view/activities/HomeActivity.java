@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import com.citu.timetrackingsystem.R;
 import com.citu.timetrackingsystem.manager.SessionManager;
+import com.citu.timetrackingsystem.model.User;
 import com.citu.timetrackingsystem.util.navigators.FragmentNavigator;
 import com.citu.timetrackingsystem.view.fragments.TimeLogsFragment;
 import com.citu.timetrackingsystem.view.fragments.UsersFragment;
@@ -37,8 +38,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         prepareNavigationView();
 
         if (savedInstanceState == null) {
-            goToFragment(R.id.nav_users);
-            mNavigationView.setCheckedItem(R.id.nav_users);
+            int id = mNavigationView.getMenu().getItem(0).getItemId();
+            goToFragment(id);
+            mNavigationView.setCheckedItem(id);
         }
     }
 
@@ -54,6 +56,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void prepareNavigationView() {
         mNavigationView.setNavigationItemSelectedListener(this);
+
+        User user = SessionManager.getInstance(this).getUser();
+
+        mNavigationView.getMenu().clear();
+
+        if (user.getRole().equals(User.ROLE_ADMIN))
+            mNavigationView.inflateMenu(R.menu.navigation_drawer_menu);
+        else
+            mNavigationView.inflateMenu(R.menu.navigation_drawer_normal_menu);
+
     }
 
     public void goToFragment(int id) {
