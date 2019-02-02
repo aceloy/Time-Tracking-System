@@ -42,4 +42,8 @@ public class SharedPreferencesManager {
     public SharedPreferences.Editor getSharedPreferencesEditor() {
         return mSharedPreferencesEditor;
     }
+
+    public int getUserIDNumber() {
+        return getSharedPreferences().getInt(SharedPreferencesManager.KEY_ID_NUMBER, 0);
+    }
 }

@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.citu.timetrackingsystem.R;
 import com.citu.timetrackingsystem.data.contracts.UserContract;
+import com.citu.timetrackingsystem.manager.SessionManager;
 import com.citu.timetrackingsystem.model.User;
 import com.citu.timetrackingsystem.util.navigators.ActivityNavigator;
 import com.citu.timetrackingsystem.view.list.ItemClickSupport;
@@ -128,12 +129,20 @@ public class UsersFragment extends Fragment implements LoaderManager.LoaderCallb
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int i, @Nullable Bundle bundle) {
+        User user = SessionManager.getInstance(getContext()).getUser();
         Uri uri = null;
         String selection = null;
         String[] selectionArgs = null;
         switch (i) {
             case User.LOADER_USERS:
                 uri = UserContract.UserEntry.CONTENT_URI;
+                if (user.getRole() == User.ROLE_ADMIN) {
+                    selection = UserContract.UserEntry.COLUMN_ID_NUMBER + " != ?";
+                    selectionArgs = new String[] {String.valueOf(user.getIdNumber())};
+                } else {
+                    selection = UserContract.UserEntry.COLUMN_ID_NUMBER + " != ?" + " AND " + UserContract.UserEntry.COLUMN_ROLE + " != ?";
+                    selectionArgs = new String[] {String.valueOf(user.getIdNumber()), User.ROLE_ADMIN};
+                }
                 break;
         }
         if (uri == null)
@@ -157,8 +166,9 @@ public class UsersFragment extends Fragment implements LoaderManager.LoaderCallb
         switch (loader.getId()) {
             case User.LOADER_USERS:
                 List<User> users = new ArrayList<>();
-                while (cursor.moveToNext())
+                while (cursor.moveToNext()) {
                     users.add(new User(cursor));
+                }
 
                 mUsers = users;
 
