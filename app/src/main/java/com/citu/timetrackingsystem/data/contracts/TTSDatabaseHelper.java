@@ -20,7 +20,7 @@ public class TTSDatabaseHelper extends SQLiteOpenHelper {
             + UserContract.UserEntry.COLUMN_ID_NUMBER + " INTEGER, "
             + UserContract.UserEntry.COLUMN_PASSWORD + " VARCHAR(100), "
             + UserContract.UserEntry.COLUMN_NAME + " VARCHAR(100), "
-            + UserContract.UserEntry.COLUMN_AGE + " TEXT, "
+            + UserContract.UserEntry.COLUMN_AGE + " INTEGER, "
             + UserContract.UserEntry.COLUMN_GENDER + " VARCHAR(50), "
             + UserContract.UserEntry.COLUMN_ADDRESS + " VARCHAR(50), "
             + UserContract.UserEntry.COLUMN_ROLE + " VARCHAR(50), "

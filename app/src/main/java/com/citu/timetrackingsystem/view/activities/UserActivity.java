@@ -3,6 +3,8 @@ package com.citu.timetrackingsystem.view.activities;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -48,10 +50,14 @@ public class UserActivity extends AppCompatActivity {
     }
 
     private void setValues() {
-        boolean isEnabled = mUser == null;
-        mEditTextIDNumber.setEnabled(isEnabled);
-        mEditTextPassword.setEnabled(isEnabled);
+        boolean isUserExist = mUser != null;
+        mEditTextIDNumber.setEnabled(!isUserExist);
+        mEditTextPassword.setEnabled(!isUserExist);
+        mEditTextPassword.setTransformationMethod(isUserExist ? HideReturnsTransformationMethod.getInstance() : PasswordTransformationMethod.getInstance());
 
+        if (!isUserExist) {
+            return;
+        }
         mEditTextIDNumber.setText(String.valueOf(mUser.getIdNumber()));
         mEditTextPassword.setText(mUser.getPassword());
         mEditTextName.setText(mUser.getName());
@@ -72,18 +78,22 @@ public class UserActivity extends AppCompatActivity {
 
     private void addUser() {
         Uri uri = getContentResolver().insert(UserContract.UserEntry.CONTENT_URI, getUser().getContentValues(true));
-        if (uri != null)
+        if (uri != null) {
+            Toast.makeText(this, getString(R.string.message_user_added), Toast.LENGTH_SHORT).show();
             finish();
-        else
+        } else {
             Toast.makeText(this, getString(R.string.message_add_user_failed), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void updateUser() {
         int update = getContentResolver().update(UserContract.UserEntry.CONTENT_URI, getUser().getContentValues(true), null, null);
-        if (update > 0)
+        if (update > 0) {
+            Toast.makeText(this, getString(R.string.message_user_updated), Toast.LENGTH_SHORT).show();
             finish();
-        else
+        } else {
             Toast.makeText(this, getString(R.string.message_update_user_failed), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

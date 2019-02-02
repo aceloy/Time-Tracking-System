@@ -211,12 +211,13 @@ public class User implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);
         parcel.writeInt(idNumber);
+        parcel.writeString(password);
         parcel.writeString(name);
         parcel.writeInt(age);
         parcel.writeString(gender);
         parcel.writeString(address);
-        parcel.writeString(status);
         parcel.writeString(role);
+        parcel.writeString(status);
         parcel.writeString(createdDate);
         parcel.writeString(updatedDate);
     }
