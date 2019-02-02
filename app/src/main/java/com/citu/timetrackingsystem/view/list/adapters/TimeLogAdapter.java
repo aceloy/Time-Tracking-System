@@ -45,4 +45,12 @@ public class TimeLogAdapter extends RecyclerView.Adapter {
         mTimeLogs = timeLogs;
         notifyDataSetChanged();
     }
+
+    public TimeLog getTimeLogForToday() {
+        for (TimeLog timeLog : mTimeLogs) {
+            if (timeLog.isToday())
+                return timeLog;
+        }
+        return null;
+    }
 }

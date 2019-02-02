@@ -1,8 +1,10 @@
 package com.citu.timetrackingsystem.model;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.format.DateUtils;
 
 import com.citu.timetrackingsystem.data.contracts.TimeLogContract;
 import com.citu.timetrackingsystem.helper.DateHelper;
@@ -14,8 +16,8 @@ public class TimeLog implements Parcelable {
     private String timeIn;
     private String timeOut;
     private String status;
-    private String createdDate;
-    private String updatedDate;
+    private String createdDate = DateHelper.getCurrentDateFormattedInISO8601();
+    private String updatedDate = DateHelper.getCurrentDateFormattedInISO8601();
 
     // Content Providers
     public static final int CONTENT_PROVIDER_TIME_LOG = 1003;
@@ -141,6 +143,35 @@ public class TimeLog implements Parcelable {
         parcel.writeString(status);
         parcel.writeString(createdDate);
         parcel.writeString(updatedDate);
+    }
+
+    public ContentValues getContentValues(boolean isSetNewUpdatedDate) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TimeLogContract.TimeLogEntry._ID, getId());
+        contentValues.put(TimeLogContract.TimeLogEntry.COLUMN_ID_NUMBER, getIdNumber());
+        contentValues.put(TimeLogContract.TimeLogEntry.COLUMN_TIME_IN, getTimeIn());
+        contentValues.put(TimeLogContract.TimeLogEntry.COLUMN_TIME_OUT, getTimeOut());
+        contentValues.put(TimeLogContract.TimeLogEntry.COLUMN_STATUS, getStatus());
+        contentValues.put(TimeLogContract.TimeLogEntry.COLUMN_CREATED_DATE, getCreatedDate());
+        contentValues.put(TimeLogContract.TimeLogEntry.COLUMN_UPDATED_DATE, isSetNewUpdatedDate ? DateHelper.getCurrentDateFormattedInISO8601() : getUpdatedDate());
+        return contentValues;
+    }
+
+    public boolean isTimeIn() {
+        String timeIn = getTimeIn();
+
+        if (timeIn == null)
+            return false;
+
+        return !timeIn.isEmpty();
+    }
+
+    public boolean isToday() {
+        String createdDate = getCreatedDate();
+        if (createdDate == null)
+            return false;
+
+        return DateUtils.isToday(DateHelper.getDateFromISO8601(createdDate).getTime());
     }
 
     public String getFormattedTimeIn() {

@@ -63,7 +63,7 @@ public class TTSContentProvider extends ContentProvider {
                 break;
             case TimeLog.CONTENT_PROVIDER_TIME_LOG:
             case TimeLog.CONTENT_PROVIDER_TIME_LOG_ID:
-                cursor = getCursorByUri(sqLiteDatabase, UserContract.UserEntry.TABLE_NAME, uri, projection, selection, selectionArgs, sortOrder);
+                cursor = getCursorByUri(sqLiteDatabase, TimeLogContract.TimeLogEntry.TABLE_NAME, uri, projection, selection, selectionArgs, sortOrder);
                 break;
         }
         if (cursor != null) {

@@ -23,11 +23,11 @@ public class TimeLogViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setValues(TimeLog timeLog) {
-        if (timeLog == null) {
+        if (timeLog == null)
             return;
-        }
+
         mTextViewDate.setText(timeLog.getFormattedCreatedDate());
         mTextViewTimeIn.setText(timeLog.getFormattedTimeIn());
-        mTextViewTimeOut.setText(timeLog.getTimeOut());
+        mTextViewTimeOut.setText(timeLog.getFormattedTimeOut());
     }
 }

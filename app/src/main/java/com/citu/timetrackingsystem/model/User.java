@@ -20,8 +20,8 @@ public class User implements Parcelable {
     private String address;
     private String role = "Normal";
     private String status;
-    private String createdDate = DateHelper.getDateFormattedInISO8601();
-    private String updatedDate = DateHelper.getDateFormattedInISO8601();
+    private String createdDate = DateHelper.getCurrentDateFormattedInISO8601();
+    private String updatedDate = DateHelper.getCurrentDateFormattedInISO8601();
 
     public static final User ADMIN_USER = new User(12345, "admin", "admin", User.ROLE_ADMIN);
 
@@ -234,7 +234,7 @@ public class User implements Parcelable {
         contentValues.put(UserContract.UserEntry.COLUMN_ROLE, getRole());
         contentValues.put(UserContract.UserEntry.COLUMN_STATUS, getStatus());
         contentValues.put(UserContract.UserEntry.COLUMN_CREATED_DATE, getCreatedDate());
-        contentValues.put(UserContract.UserEntry.COLUMN_UPDATED_DATE, isSetNewUpdatedDate ? DateHelper.getDateFormattedInISO8601() : getUpdatedDate());
+        contentValues.put(UserContract.UserEntry.COLUMN_UPDATED_DATE, isSetNewUpdatedDate ? DateHelper.getCurrentDateFormattedInISO8601() : getUpdatedDate());
         return contentValues;
     }
 

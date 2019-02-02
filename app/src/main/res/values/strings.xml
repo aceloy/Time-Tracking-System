@@ -25,6 +25,7 @@
     <string name="action_add">Add</string>
     <string name="action_update">Update</string>
     <string name="action_delete">Delete</string>
+    <string name="action_confirm">Confirm</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_time_in">Time In</string>
     <string name="action_time_out">Time Out</string>
