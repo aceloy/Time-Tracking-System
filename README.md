@@ -10,7 +10,7 @@ Login
 
 Home (Admin)
 ✔️ List all Users
-❌ Create/Update/Delete User
+✔️ Create/Update/Delete User
 ❌ Delete any User time log
 
 Home (Normal)
