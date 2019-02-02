@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_time_logs"
-            android:icon="@drawable/baseline_timer_off_black_24"
+            android:icon="@drawable/baseline_access_time_white_24"
             android:title="@string/action_time_logs" />
 
         <item

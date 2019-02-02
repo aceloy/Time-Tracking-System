@@ -14,6 +14,8 @@ import com.citu.timetrackingsystem.manager.SessionManager;
 import com.citu.timetrackingsystem.model.User;
 import com.citu.timetrackingsystem.util.navigators.ActivityNavigator;
 
+import java.util.Date;
+
 public class LoginActivity extends AppCompatActivity {
 
     public TextView mTextViewDate, mTextViewTime;
@@ -60,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void startClock() {
-        mTextViewDate.setText(DateHelper.getDateInMMddyy1());
+        mTextViewDate.setText(DateHelper.getDateFormattedInMMddyy1(new Date()));
         new Thread() {
             @Override
             public void run() {
@@ -70,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                mTextViewTime.setText(DateHelper.getCurrentTimeInHHMMss());
+                                mTextViewTime.setText(DateHelper.getCurrentDateFormattedInHHMMss());
                             }
                         });
                     }

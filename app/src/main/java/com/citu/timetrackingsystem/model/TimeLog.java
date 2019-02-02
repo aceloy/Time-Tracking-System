@@ -1,52 +1,62 @@
 package com.citu.timetrackingsystem.model;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.citu.timetrackingsystem.data.contracts.TimeLogContract;
+import com.citu.timetrackingsystem.helper.DateHelper;
 
 public class TimeLog implements Parcelable {
 
     private int id = -1;
-    private String userID;
-    private String time;
+    private int idNumber;
+    private String timeIn;
+    private String timeOut;
     private String status;
     private String createdDate;
     private String updatedDate;
+
+    // Content Providers
+    public static final int CONTENT_PROVIDER_TIME_LOG = 1003;
+    public static final int CONTENT_PROVIDER_TIME_LOG_ID = 1004;
+
+    // Loaders
+    public static final int LOADER_TIME_LOGS = 2002;
 
     public TimeLog() {
 
     }
 
-    public TimeLog(int id, String userID, String time, String status, String createdDate, String updatedDate) {
+    public TimeLog(int id, int idNumber, String timeIn, String timeOut, String status, String createdDate, String updatedDate) {
         this.id = id;
-        this.userID = userID;
-        this.time = time;
+        this.idNumber = idNumber;
+        this.timeIn = timeIn;
+        this.timeOut = timeOut;
         this.status = status;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
     }
 
+
+    public TimeLog(Cursor cursor) {
+        id = cursor.getInt(cursor.getColumnIndex(TimeLogContract.TimeLogEntry._ID));
+        idNumber = cursor.getInt(cursor.getColumnIndex(TimeLogContract.TimeLogEntry.COLUMN_ID_NUMBER));
+        timeIn = cursor.getString(cursor.getColumnIndex(TimeLogContract.TimeLogEntry.COLUMN_TIME_IN));
+        timeOut = cursor.getString(cursor.getColumnIndex(TimeLogContract.TimeLogEntry.COLUMN_TIME_OUT));
+        status = cursor.getString(cursor.getColumnIndex(TimeLogContract.TimeLogEntry.COLUMN_STATUS));
+        createdDate = cursor.getString(cursor.getColumnIndex(TimeLogContract.TimeLogEntry.COLUMN_CREATED_DATE));
+        updatedDate = cursor.getString(cursor.getColumnIndex(TimeLogContract.TimeLogEntry.COLUMN_UPDATED_DATE));
+    }
+
     protected TimeLog(Parcel in) {
         id = in.readInt();
-        userID = in.readString();
-        time = in.readString();
+        idNumber = in.readInt();
+        timeIn = in.readString();
+        timeOut = in.readString();
         status = in.readString();
         createdDate = in.readString();
         updatedDate = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(userID);
-        dest.writeString(time);
-        dest.writeString(status);
-        dest.writeString(createdDate);
-        dest.writeString(updatedDate);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public static final Creator<TimeLog> CREATOR = new Creator<TimeLog>() {
@@ -69,20 +79,28 @@ public class TimeLog implements Parcelable {
         this.id = id;
     }
 
-    public String getUserID() {
-        return userID;
+    public int getIdNumber() {
+        return idNumber;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setIdNumber(int idNumber) {
+        this.idNumber = idNumber;
     }
 
-    public String getTime() {
-        return time;
+    public String getTimeIn() {
+        return timeIn;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setTimeIn(String timeIn) {
+        this.timeIn = timeIn;
+    }
+
+    public String getTimeOut() {
+        return timeOut;
+    }
+
+    public void setTimeOut(String timeOut) {
+        this.timeOut = timeOut;
     }
 
     public String getStatus() {
@@ -107,5 +125,45 @@ public class TimeLog implements Parcelable {
 
     public void setUpdatedDate(String updatedDate) {
         this.updatedDate = updatedDate;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeInt(idNumber);
+        parcel.writeString(timeIn);
+        parcel.writeString(timeOut);
+        parcel.writeString(status);
+        parcel.writeString(createdDate);
+        parcel.writeString(updatedDate);
+    }
+
+    public String getFormattedTimeIn() {
+        String timeIn = getTimeIn();
+        if (timeIn == null)
+            return null;
+
+        return DateHelper.getDateFormattedInTimeAM_PM(DateHelper.getDateFromISO8601(timeIn));
+    }
+
+    public String getFormattedTimeOut() {
+        String timeOut = getTimeOut();
+        if (timeOut == null)
+            return null;
+
+        return DateHelper.getDateFormattedInTimeAM_PM(DateHelper.getDateFromISO8601(timeOut));
+    }
+
+    public String getFormattedCreatedDate() {
+        String createdDate = getCreatedDate();
+        if (createdDate == null)
+            return null;
+
+        return DateHelper.getDateFormattedInMMddyy1(DateHelper.getDateFromISO8601(createdDate));
     }
 }

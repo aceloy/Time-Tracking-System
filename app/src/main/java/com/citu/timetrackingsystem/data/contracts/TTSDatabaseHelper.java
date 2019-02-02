@@ -30,8 +30,9 @@ public class TTSDatabaseHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_TABLE_TIME_LOG = "CREATE TABLE " + TimeLogContract.TimeLogEntry.TABLE_NAME + "("
             + TimeLogContract.TimeLogEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + TimeLogContract.TimeLogEntry.COLUMN_USER_ID + " INTEGER, "
-            + TimeLogContract.TimeLogEntry.COLUMN_TIME + " VARCHAR(100), "
+            + TimeLogContract.TimeLogEntry.COLUMN_ID_NUMBER + " INTEGER, "
+            + TimeLogContract.TimeLogEntry.COLUMN_TIME_IN + " VARCHAR(100), "
+            + TimeLogContract.TimeLogEntry.COLUMN_TIME_OUT + " VARCHAR(100), "
             + BaseContract.BaseEntry.COLUMN_STATUS + " VARCHAR(50), "
             + BaseContract.BaseEntry.COLUMN_CREATED_DATE + " VARCHAR(50), "
             + BaseContract.BaseEntry.COLUMN_UPDATED_DATE + " VARCHAR(50));";

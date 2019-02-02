@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import com.citu.timetrackingsystem.data.contracts.BaseContract;
 import com.citu.timetrackingsystem.data.contracts.TimeLogContract;
 import com.citu.timetrackingsystem.data.contracts.UserContract;
+import com.citu.timetrackingsystem.model.TimeLog;
 import com.citu.timetrackingsystem.model.User;
 
 public class TTSContentProvider extends ContentProvider {
@@ -23,8 +24,8 @@ public class TTSContentProvider extends ContentProvider {
     static {
         mURIMatcher.addURI(UserContract.CONTENT_AUTHORITY, UserContract.PATH_USER, User.CONTENT_PROVIDER_USER);
         mURIMatcher.addURI(UserContract.CONTENT_AUTHORITY, UserContract.PATH_USER + "/#", User.CONTENT_PROVIDER_USER_ID);
-        mURIMatcher.addURI(UserContract.CONTENT_AUTHORITY, TimeLogContract.PATH_TIME_LOG, TimeLogContract.TimeLogEntry.CONTENT_PROVIDER_TIME_LOG);
-        mURIMatcher.addURI(UserContract.CONTENT_AUTHORITY, TimeLogContract.PATH_TIME_LOG + "/#", TimeLogContract.TimeLogEntry.CONTENT_PROVIDER_TIME_LOG_ID);
+        mURIMatcher.addURI(UserContract.CONTENT_AUTHORITY, TimeLogContract.PATH_TIME_LOG, TimeLog.CONTENT_PROVIDER_TIME_LOG);
+        mURIMatcher.addURI(UserContract.CONTENT_AUTHORITY, TimeLogContract.PATH_TIME_LOG + "/#", TimeLog.CONTENT_PROVIDER_TIME_LOG_ID);
     }
 
     private com.citu.timetrackingsystem.data.contracts.TTSDatabaseHelper mTTSDatabaseHelper;
@@ -42,9 +43,9 @@ public class TTSContentProvider extends ContentProvider {
                 return UserContract.UserEntry.CONTENT_LIST_TYPE;
             case User.CONTENT_PROVIDER_USER_ID:
                 return UserContract.UserEntry.CONTENT_ITEM_TYPE;
-            case TimeLogContract.TimeLogEntry.CONTENT_PROVIDER_TIME_LOG:
+            case TimeLog.CONTENT_PROVIDER_TIME_LOG:
                 return TimeLogContract.TimeLogEntry.CONTENT_LIST_TYPE;
-            case TimeLogContract.TimeLogEntry.CONTENT_PROVIDER_TIME_LOG_ID:
+            case TimeLog.CONTENT_PROVIDER_TIME_LOG_ID:
                 return TimeLogContract.TimeLogEntry.CONTENT_ITEM_TYPE;
         }
         return null;
@@ -60,8 +61,8 @@ public class TTSContentProvider extends ContentProvider {
             case User.CONTENT_PROVIDER_USER_ID:
                 cursor = getCursorByUri(sqLiteDatabase, UserContract.UserEntry.TABLE_NAME, uri, projection, selection, selectionArgs, sortOrder);
                 break;
-            case TimeLogContract.TimeLogEntry.CONTENT_PROVIDER_TIME_LOG:
-            case TimeLogContract.TimeLogEntry.CONTENT_PROVIDER_TIME_LOG_ID:
+            case TimeLog.CONTENT_PROVIDER_TIME_LOG:
+            case TimeLog.CONTENT_PROVIDER_TIME_LOG_ID:
                 cursor = getCursorByUri(sqLiteDatabase, UserContract.UserEntry.TABLE_NAME, uri, projection, selection, selectionArgs, sortOrder);
                 break;
         }
@@ -80,7 +81,7 @@ public class TTSContentProvider extends ContentProvider {
             case User.CONTENT_PROVIDER_USER:
                 id = insertByUri(sqLiteDatabase, UserContract.UserEntry.TABLE_NAME, uri, contentValues);
                 break;
-            case TimeLogContract.TimeLogEntry.CONTENT_PROVIDER_TIME_LOG:
+            case TimeLog.CONTENT_PROVIDER_TIME_LOG:
                 id = insertByUri(sqLiteDatabase, TimeLogContract.TimeLogEntry.TABLE_NAME, uri, contentValues);
                 break;
         }
@@ -100,8 +101,8 @@ public class TTSContentProvider extends ContentProvider {
                 newContentValues.remove(UserContract.UserEntry.COLUMN_ID_NUMBER);
                 numberOfRowsUpdated = updateByUri(sqLiteDatabase, UserContract.UserEntry.TABLE_NAME, uri, newContentValues, selection, selectionArgs);
                 break;
-            case TimeLogContract.TimeLogEntry.CONTENT_PROVIDER_TIME_LOG:
-            case TimeLogContract.TimeLogEntry.CONTENT_PROVIDER_TIME_LOG_ID:
+            case TimeLog.CONTENT_PROVIDER_TIME_LOG:
+            case TimeLog.CONTENT_PROVIDER_TIME_LOG_ID:
                 numberOfRowsUpdated = updateByUri(sqLiteDatabase, TimeLogContract.TimeLogEntry.TABLE_NAME, uri, newContentValues, selection, selectionArgs);
                 break;
         }
@@ -120,8 +121,8 @@ public class TTSContentProvider extends ContentProvider {
             case User.CONTENT_PROVIDER_USER_ID:
                 numberOfRowsDeleted = deleteByUri(sqLiteDatabase, UserContract.UserEntry.TABLE_NAME, uri, selection, selectionArgs);
                 break;
-            case TimeLogContract.TimeLogEntry.CONTENT_PROVIDER_TIME_LOG:
-            case TimeLogContract.TimeLogEntry.CONTENT_PROVIDER_TIME_LOG_ID:
+            case TimeLog.CONTENT_PROVIDER_TIME_LOG:
+            case TimeLog.CONTENT_PROVIDER_TIME_LOG_ID:
                 numberOfRowsDeleted = deleteByUri(sqLiteDatabase, TimeLogContract.TimeLogEntry.TABLE_NAME, uri, selection, selectionArgs);
                 break;
         }

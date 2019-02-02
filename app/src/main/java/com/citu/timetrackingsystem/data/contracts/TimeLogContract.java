@@ -16,10 +16,10 @@ public class TimeLogContract {
         public static final Uri CONTENT_URI =  BASE_CONTENT_URI.buildUpon().appendPath(PATH_TIME_LOG).build();
         public static final String CONTENT_LIST_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_TIME_LOG;
         public static final String CONTENT_ITEM_TYPE =  ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_TIME_LOG;
-        public static final int CONTENT_PROVIDER_TIME_LOG = 1003;
-        public static final int CONTENT_PROVIDER_TIME_LOG_ID = 1004;
+
         public static final String TABLE_NAME = "time_log";
-        public static final String COLUMN_USER_ID = "user_id";
-        public static final String COLUMN_TIME = "time";
+        public static final String COLUMN_ID_NUMBER = "user_id";
+        public static final String COLUMN_TIME_IN = "time_in";
+        public static final String COLUMN_TIME_OUT = "time_out";
     }
 }

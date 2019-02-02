@@ -62,7 +62,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView.getMenu().clear();
 
         if (user.getRole().equals(User.ROLE_ADMIN))
-            mNavigationView.inflateMenu(R.menu.navigation_drawer_menu);
+            mNavigationView.inflateMenu(R.menu.navigation_drawer_admin_menu);
         else
             mNavigationView.inflateMenu(R.menu.navigation_drawer_normal_menu);
 

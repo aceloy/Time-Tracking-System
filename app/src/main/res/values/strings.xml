@@ -15,12 +15,18 @@
     <string name="label_gender">Gender</string>
     <string name="label_address">Address</string>
 
+    <string name="label_date">Date</string>
+    <string name="label_time_in">Time in</string>
+    <string name="label_time_out">Time out</string>
+
     <string name="action_users">Users</string>
     <string name="action_time_logs">Time Logs</string>
     <string name="action_time_logout">Logout</string>
     <string name="action_add">Add</string>
     <string name="action_delete">Delete</string>
     <string name="action_cancel">Cancel</string>
+    <string name="action_time_in">Time In</string>
+    <string name="action_time_out">Time Out</string>
 
     <string name="message_invalid_id_number_or_password">Invalid ID Number or Password</string>
     <string name="message_no_users">No Users</string>
