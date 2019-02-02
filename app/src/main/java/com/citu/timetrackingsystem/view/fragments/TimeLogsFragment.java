@@ -1,6 +1,7 @@
 package com.citu.timetrackingsystem.view.fragments;
 
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -75,6 +76,8 @@ public class TimeLogsFragment extends Fragment implements LoaderManager.LoaderCa
 
         mUser = SessionManager.getInstance(getContext()).getUser();
 
+        showHideFabTimer();
+
         mLoaderManager = getActivity().getSupportLoaderManager();
     }
 
@@ -97,6 +100,11 @@ public class TimeLogsFragment extends Fragment implements LoaderManager.LoaderCa
     public void showHideRecyclerView(boolean isShow) {
         mRecyclerView.setVisibility(isShow ? View.VISIBLE : View.GONE);
         mTextViewNoTimeLogs.setVisibility(isShow ? View.GONE : View.VISIBLE);
+    }
+
+    @SuppressLint("RestrictedApi")
+    public void showHideFabTimer() {
+        mFabButtonTimer.setVisibility(mUser.getRole().equals(User.ROLE_ADMIN) ? View.INVISIBLE : View.VISIBLE);
     }
 
     private void prepareActions() {
@@ -170,7 +178,7 @@ public class TimeLogsFragment extends Fragment implements LoaderManager.LoaderCa
         switch (i) {
             case TimeLog.LOADER_TIME_LOGS:
                 uri = TimeLogContract.TimeLogEntry.CONTENT_URI;
-                if (user.getRole() == User.ROLE_ADMIN) {
+                if (user.getRole().equals(User.ROLE_ADMIN)) {
 
                 } else {
                     selection = TimeLogContract.TimeLogEntry.COLUMN_ID_NUMBER + " = ?";
