@@ -238,6 +238,19 @@ public class User implements Parcelable {
         return contentValues;
     }
 
+    public static User getUserByIDNumber(Context context, int idNumber) {
+        Cursor cursor = context.getContentResolver().query(
+                UserContract.UserEntry.CONTENT_URI,
+                null,
+                UserContract.UserEntry.COLUMN_ID_NUMBER + " = ?",
+                new String[]{String.valueOf(idNumber)},
+                null);
+        while (cursor.moveToNext())
+            return new User(cursor);
+
+        return null;
+    }
+
     public static User getUserByIDNumberAndPassword(Context context, int idNumber, String password) {
         Cursor cursor = context.getContentResolver().query(
                 UserContract.UserEntry.CONTENT_URI,

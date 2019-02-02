@@ -77,6 +77,10 @@ public class UserActivity extends AppCompatActivity {
     }
 
     private void addUser() {
+        if (User.getUserByIDNumber(this, getUser().getIdNumber()) != null) {
+            Toast.makeText(this, getString(R.string.message_user_already_exist), Toast.LENGTH_SHORT).show();
+            return;
+        }
         Uri uri = getContentResolver().insert(UserContract.UserEntry.CONTENT_URI, getUser().getContentValues(true));
         if (uri != null) {
             Toast.makeText(this, getString(R.string.message_user_added), Toast.LENGTH_SHORT).show();
