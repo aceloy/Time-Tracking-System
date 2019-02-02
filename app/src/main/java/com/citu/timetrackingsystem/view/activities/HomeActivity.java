@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.citu.timetrackingsystem.R;
+import com.citu.timetrackingsystem.manager.SessionManager;
 import com.citu.timetrackingsystem.util.navigators.FragmentNavigator;
 import com.citu.timetrackingsystem.view.fragments.TimeLogsFragment;
 import com.citu.timetrackingsystem.view.fragments.UsersFragment;
@@ -68,6 +69,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     mTimeLogsFragment = new TimeLogsFragment();
                 }
                 FragmentNavigator.goToTimeLogsFragment(this, R.id.home_frame_layout, mTimeLogsFragment);
+                break;
+            case R.id.nav_logout:
+                SessionManager.getInstance(this).removeSession();
+                finish();
                 break;
         }
     }

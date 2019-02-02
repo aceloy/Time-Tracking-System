@@ -17,6 +17,7 @@
 
     <string name="action_users">Users</string>
     <string name="action_time_logs">Time Logs</string>
+    <string name="action_time_logout">Logout</string>
     <string name="action_add">Add</string>
 
 

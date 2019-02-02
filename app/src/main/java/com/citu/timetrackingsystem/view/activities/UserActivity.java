@@ -71,8 +71,6 @@ public class UserActivity extends AppCompatActivity {
     }
 
     private void addUser() {
-
-
         Uri uri = getContentResolver().insert(UserContract.UserEntry.CONTENT_URI, getUser().getContentValues(true));
         if (uri != null)
             finish();
