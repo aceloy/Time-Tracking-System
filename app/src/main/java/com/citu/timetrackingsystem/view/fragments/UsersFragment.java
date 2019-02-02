@@ -1,6 +1,7 @@
 package com.citu.timetrackingsystem.view.fragments;
 
 
+import android.content.ContentUris;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.citu.timetrackingsystem.R;
 import com.citu.timetrackingsystem.data.contracts.UserContract;
@@ -74,6 +77,11 @@ public class UsersFragment extends Fragment implements LoaderManager.LoaderCallb
         mRecyclerView.setAdapter(mUserAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener((recyclerView, position, v) -> ActivityNavigator.goToUserActivity(getActivity(), mUsers.get(position)));
+
+        ItemClickSupport.addTo(mRecyclerView).setOnItemLongClickListener((recyclerView, position, v) -> {
+            showAlertDialogForDeleteUser(mUsers.get(position));
+            return false;
+        });
     }
 
     public void updateRecyclerView() {
@@ -86,6 +94,17 @@ public class UsersFragment extends Fragment implements LoaderManager.LoaderCallb
         mTextViewNoUsers.setVisibility(isShow ? View.GONE : View.VISIBLE);
     }
 
+    private void showAlertDialogForDeleteUser(User user) {
+        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+        alertDialog.setTitle("");
+        alertDialog.setMessage(getString(R.string.message_delete_user) + " " + user.getName() + "?");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.action_cancel),
+                (dialog, which) -> dialog.dismiss());
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.action_delete),
+                (dialog, which) -> deleteUser(user));
+        alertDialog.show();
+    }
+
     private void prepareActions() {
         mFabButtonAdd.setOnClickListener(view -> ActivityNavigator.goToUserActivity(getActivity(), null));
     }
@@ -95,6 +114,15 @@ public class UsersFragment extends Fragment implements LoaderManager.LoaderCallb
             mLoaderManager.initLoader(User.LOADER_USERS, null, this);
         else
             mLoaderManager.restartLoader(User.LOADER_USERS, null, this);
+    }
+
+    private void deleteUser(User user) {
+        int deleted = getActivity()
+                .getContentResolver()
+                .delete(ContentUris.withAppendedId(UserContract.UserEntry.CONTENT_URI, user.getId()), null, null);
+
+        String message = getString(deleted > 0 ? R.string.message_user_deleted : R.string.message_delete_user_failed);
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @NonNull

@@ -19,14 +19,19 @@
     <string name="action_time_logs">Time Logs</string>
     <string name="action_time_logout">Logout</string>
     <string name="action_add">Add</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_cancel">Cancel</string>
 
     <string name="message_invalid_id_number_or_password">Invalid ID Number or Password</string>
     <string name="message_no_users">No Users</string>
     <string name="message_no_time_logs">No Time Logs</string>
     <string name="message_user_added">Added User</string>
-    <string name="message_user_updated">Updated User</string>
     <string name="message_add_user_failed">Add User failed</string>
+    <string name="message_user_updated">Updated User</string>
     <string name="message_update_user_failed">Update User failed</string>
+    <string name="message_delete_user_failed">Delete User failed</string>
+    <string name="message_user_deleted">User deleted</string>
+    <string name="message_delete_user">Delete User</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

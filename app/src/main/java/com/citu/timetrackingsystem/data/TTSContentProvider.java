@@ -24,7 +24,7 @@ public class TTSContentProvider extends ContentProvider {
         mURIMatcher.addURI(UserContract.CONTENT_AUTHORITY, UserContract.PATH_USER, User.CONTENT_PROVIDER_USER);
         mURIMatcher.addURI(UserContract.CONTENT_AUTHORITY, UserContract.PATH_USER + "/#", User.CONTENT_PROVIDER_USER_ID);
         mURIMatcher.addURI(UserContract.CONTENT_AUTHORITY, TimeLogContract.PATH_TIME_LOG, TimeLogContract.TimeLogEntry.CONTENT_PROVIDER_TIME_LOG);
-        mURIMatcher.addURI(UserContract.CONTENT_AUTHORITY, TimeLogContract.PATH_TIME_LOG, TimeLogContract.TimeLogEntry.CONTENT_PROVIDER_TIME_LOG_ID);
+        mURIMatcher.addURI(UserContract.CONTENT_AUTHORITY, TimeLogContract.PATH_TIME_LOG + "/#", TimeLogContract.TimeLogEntry.CONTENT_PROVIDER_TIME_LOG_ID);
     }
 
     private com.citu.timetrackingsystem.data.contracts.TTSDatabaseHelper mTTSDatabaseHelper;
