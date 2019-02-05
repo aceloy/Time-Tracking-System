@@ -47,7 +47,8 @@ public class User implements Parcelable {
         this.role = role;
     }
 
-    public User(int idNumber, String password, String name, int age, String gender, String address, String role) {
+    public User(int id, int idNumber, String password, String name, int age, String gender, String address, String role) {
+        this.id = id;
         this.idNumber = idNumber;
         this.password = password;
         this.name = name;

@@ -1,5 +1,6 @@
 package com.citu.timetrackingsystem.view.activities;
 
+import android.content.ContentUris;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -70,13 +71,14 @@ public class UserActivity extends AppCompatActivity {
     }
 
     private User getUser() {
+        int id = mUser != null ? mUser.getId() : -1;
         int idNumber = Integer.parseInt(mEditTextIDNumber.getText().toString().trim());
         String password = mEditTextPassword.getText().toString().trim();
         String name = mEditTextName.getText().toString().trim();
         int age = Integer.parseInt(mEditTextAge.getText().toString().trim());
         String gender = mEditTextGender.getText().toString().trim();
         String address = mEditTextAddress.getText().toString().trim();
-        return new User(idNumber, password, name, age, gender, address, User.ROLE_NORMAL);
+        return new User(id, idNumber, password, name, age, gender, address, User.ROLE_NORMAL);
     }
 
     private void addUser() {
@@ -94,7 +96,8 @@ public class UserActivity extends AppCompatActivity {
     }
 
     private void updateUser() {
-        int update = getContentResolver().update(UserContract.UserEntry.CONTENT_URI, getUser().getContentValues(true), null, null);
+        User user = getUser();
+        int update = getContentResolver().update(ContentUris.withAppendedId(UserContract.UserEntry.CONTENT_URI, user.getId()), user.getContentValues(true), null, null);
         if (update > 0) {
             Toast.makeText(this, getString(R.string.message_user_updated), Toast.LENGTH_SHORT).show();
             finish();

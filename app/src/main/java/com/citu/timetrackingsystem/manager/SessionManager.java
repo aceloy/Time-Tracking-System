@@ -72,9 +72,9 @@ public class SessionManager {
     public User getUser() {
         int idNumber = mSharedPreferenceManager
                 .getSharedPreferences()
-                .getInt(SharedPreferencesManager.KEY_ID_NUMBER, 0);
+                .getInt(SharedPreferencesManager.KEY_ID_NUMBER, -1);
 
-        if (idNumber == 0)
+        if (idNumber == -1)
             return null;
 
         Cursor cursor = mContext.getContentResolver().query(
