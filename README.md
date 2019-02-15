@@ -11,7 +11,7 @@ Login
 Home (Admin)
 ✔️ List all Users
 ✔️ Create/Update/Delete User
-❌ Delete any User time log
+✔️Delete any User time log
 
 Home (Normal)
-❌ Time in/Time out
+✔️Time in/Time out
