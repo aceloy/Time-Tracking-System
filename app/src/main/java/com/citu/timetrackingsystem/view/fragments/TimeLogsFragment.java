@@ -2,6 +2,7 @@ package com.citu.timetrackingsystem.view.fragments;
 
 
 import android.annotation.SuppressLint;
+import android.content.ContentUris;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -11,9 +12,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.citu.timetrackingsystem.R;
 import com.citu.timetrackingsystem.data.contracts.TimeLogContract;
@@ -29,6 +31,7 @@ import com.citu.timetrackingsystem.helper.DateHelper;
 import com.citu.timetrackingsystem.manager.SessionManager;
 import com.citu.timetrackingsystem.model.TimeLog;
 import com.citu.timetrackingsystem.model.User;
+import com.citu.timetrackingsystem.view.list.ItemClickSupport;
 import com.citu.timetrackingsystem.view.list.adapters.TimeLogAdapter;
 
 import java.util.ArrayList;
@@ -85,6 +88,12 @@ public class TimeLogsFragment extends Fragment implements LoaderManager.LoaderCa
         mTimeLogAdapter = new TimeLogAdapter(getContext(), mTimeLogs);
         mRecyclerView.setAdapter(mTimeLogAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        ItemClickSupport.addTo(mRecyclerView).setOnItemLongClickListener((recyclerView, position, v) -> {
+            if (mUser.getRole().equals(User.ROLE_ADMIN))
+                showAlertDialogForDeleteUser(mTimeLogs.get(position));
+
+            return false;
+        });
     }
 
     public void updateRecyclerView() {
@@ -106,6 +115,18 @@ public class TimeLogsFragment extends Fragment implements LoaderManager.LoaderCa
     public void showHideFabTimer() {
         mFabButtonTimer.setVisibility(mUser.getRole().equals(User.ROLE_ADMIN) ? View.INVISIBLE : View.VISIBLE);
     }
+
+    private void showAlertDialogForDeleteUser(TimeLog timeLog) {
+        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+        alertDialog.setTitle("");
+        alertDialog.setMessage(getString(R.string.message_delete_time_log) + " ?");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.action_cancel),
+                (dialog, which) -> dialog.dismiss());
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.action_delete),
+                (dialog, which) -> deleteTimeLog(timeLog));
+        alertDialog.show();
+    }
+
 
     private void prepareActions() {
         mFabButtonTimer.setOnClickListener(view -> showTimeInTimeOutDialog());
@@ -133,8 +154,17 @@ public class TimeLogsFragment extends Fragment implements LoaderManager.LoaderCa
             mLoaderManager.restartLoader(TimeLog.LOADER_TIME_LOGS, null, this);
     }
 
+    private void deleteTimeLog(TimeLog timeLog) {
+        int deleted = getActivity()
+                .getContentResolver()
+                .delete(ContentUris.withAppendedId(TimeLogContract.TimeLogEntry.CONTENT_URI, timeLog.getId()), null, null);
+
+        String message = getString(deleted > 0 ? R.string.message_time_log_deleted : R.string.message_delete_time_log_failed);
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
     private void setFabTimerIcon(boolean isTimeIn) {
-        Drawable drawable = ContextCompat.getDrawable(getContext(), isTimeIn ? R.drawable.baseline_timer_off_white_24 : R.drawable.baseline_timer_white_24);
+        Drawable drawable = ResourcesCompat.getDrawable(getResources(), isTimeIn ? R.drawable.baseline_timer_off_white_24 : R.drawable.baseline_timer_white_24, null);
         mFabButtonTimer.setImageDrawable(drawable);
     }
 
@@ -221,6 +251,13 @@ public class TimeLogsFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (getActivity().getSupportLoaderManager().getLoader(TimeLog.LOADER_TIME_LOGS) != null)
+            mLoaderManager.destroyLoader(TimeLog.LOADER_TIME_LOGS);
     }
 
     @Override

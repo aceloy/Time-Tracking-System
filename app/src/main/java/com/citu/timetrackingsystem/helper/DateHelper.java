@@ -32,7 +32,7 @@ public class DateHelper {
 
     public static String getCurrentDateFormattedInHHMMss() {
         Calendar calendar = Calendar.getInstance();
-        int hours = calendar.get(Calendar.HOUR_OF_DAY);
+        int hours = calendar.get(Calendar.HOUR);
         int minutes = calendar.get(Calendar.MINUTE);
         int seconds = calendar.get(Calendar.SECOND);
         String AM_PM = calendar.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM";

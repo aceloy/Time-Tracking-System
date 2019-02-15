@@ -40,7 +40,10 @@
     <string name="message_update_user_failed">Update User failed</string>
     <string name="message_delete_user_failed">Delete User failed</string>
     <string name="message_user_deleted">User deleted</string>
+    <string name="message_delete_time_log_failed">Delete Time Log failed</string>
+    <string name="message_time_log_deleted">Time Log deleted</string>
     <string name="message_delete_user">Delete User</string>
+    <string name="message_delete_time_log">Delete Time Log</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
